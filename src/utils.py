@@ -8,7 +8,7 @@ def status_check(url):
     with requests.Session() as session:
         response = session.get(url).status_code
         if response == 200:
-            print('Сайт работает')
+            print(f'--Сайт работает--\nSTATUS CODE: {response}')
         else:
             print('Сайт не работает, или к нему нет доступа')
         return response
@@ -27,7 +27,7 @@ def get_phone_number(url):
     with requests.Session() as session:
         response = session.get(url).text
         soup = BeautifulSoup(response, 'lxml')
-        phone_number = soup.find(class_='phone-number').text
+        phone_number = soup.find(class_='phone-number').text.replace(' ', '')
         result = re.match(r'^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$',
                           phone_number)
         if bool(result):
